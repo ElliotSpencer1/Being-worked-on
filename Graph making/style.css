@@ -1,13 +1,80 @@
+/* Global Styling */
 body {
     font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #333;
+    color: #ddd;
+}
+
+.container {
+    max-width: 800px;
+    width: 100%;
     text-align: center;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #444;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-#axisInput, #dataInput {
-    margin: 10px;
+h1 {
+    color: #f0f0f0;
+    margin-bottom: 20px;
 }
 
+/* Form Controls */
+.control-group {
+    margin: 10px 0;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+label, input, select, button {
+    color: #ddd;
+    background-color: #555;
+    border: 1px solid #666;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+/* Input fields */
+input, select {
+    min-width: 150px;
+    color: #ddd; /* Set text color */
+}
+
+input::placeholder {
+    color: #aaa; /* Lighter placeholder text */
+}
+
+button {
+    cursor: pointer;
+    background-color: #777;
+}
+
+button:hover {
+    background-color: #888;
+}
+
+/* Data Display */
+#dataInput {
+    margin: 10px 0;
+}
+
+#dataInput div {
+    color: #bbb;
+}
+
+/* Canvas */
 canvas {
-    max-width: 600px;
-    margin: 20px auto;
+    margin-top: 20px;
+    width: 50vw;  /* 50% of the viewport width */
+    height: 50vh; /* 50% of the viewport height */
+    max-width: 100%; 
+    background-color: #222;
+    border-radius: 8px;
 }

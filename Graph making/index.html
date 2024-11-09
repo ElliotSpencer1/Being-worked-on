@@ -7,34 +7,49 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Interactive Graph Plotter</h1>
-    <div>
-        <label for="graphType">Choose a graph type:</label>
-        <select id="graphType">
-            <option value="line">Line Graph</option>
-            <option value="bar">Bar Chart</option>
-        </select>
+    <div class="container">
+        <h1>Interactive Graph Plotter</h1>
+        
+        <!-- Graph Type Selector -->
+        <div class="control-group">
+            <label for="graphType">Choose a graph type:</label>
+            <select id="graphType">
+                <option value="line">Line Graph</option>
+                <option value="bar">Bar Chart</option>
+            </select>
+        </div>
+        
+        <!-- Axis Labels and Units -->
+        <div class="control-group">
+            <label for="xLabel">X-Axis Label:</label>
+            <input type="text" id="xLabel" placeholder="X-axis label">
+            <input type="text" id="xUnit" placeholder="X-axis units">
+        </div>
+        <div class="control-group">
+            <label for="yLabel">Y-Axis Label:</label>
+            <input type="text" id="yLabel" placeholder="Y-axis label">
+            <input type="text" id="yUnit" placeholder="Y-axis units">
+        </div>
+
+        <!-- Data Input Fields -->
+        <div class="control-group">
+            <input type="number" id="xValueInput" placeholder="Enter X value">
+            <button id="addXValue">Add X Value</button>
+            <input type="number" id="yValueInput" placeholder="Enter Y value">
+            <button id="addYValue">Add Y Value</button>
+        </div>
+
+        <!-- Displaying Entered Data -->
+        <div id="dataInput">
+            <h3>Data Points</h3>
+            <div id="xValues"></div>
+            <div id="yValues"></div>
+        </div>
+
+        <!-- Plot Button and Canvas -->
+        <button id="plotButton">Plot Graph</button>
+        <canvas id="chartCanvas"></canvas>
     </div>
-    <div id="axisInput">
-        <label for="xLabel">X-Axis Label:</label>
-        <input type="text" id="xLabel">
-        <label for="xUnit">Units:</label>
-        <input type="text" id="xUnit">
-        <button id="addXValue">Add X Value</button>
-        <br>
-        <label for="yLabel">Y-Axis Label:</label>
-        <input type="text" id="yLabel">
-        <label for="yUnit">Units:</label>
-        <input type="text" id="yUnit">
-        <button id="addYValue">Add Y Value</button>
-    </div>
-    <div id="dataInput">
-        <h3>Data Points</h3>
-        <div id="xValues"></div>
-        <div id="yValues"></div>
-    </div>
-    <button id="plotButton">Plot Graph</button>
-    <canvas id="chartCanvas"></canvas>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
