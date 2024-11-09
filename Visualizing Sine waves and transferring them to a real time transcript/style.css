@@ -1,12 +1,28 @@
 body {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
     background-color: #222;
+    color: #00ff00;
+    font-family: Arial, sans-serif;
   }
+  
   canvas {
     border: 1px solid #444;
     background-color: #333;
   }
+  
+  #transcript {
+    margin-top: 20px;
+    width: 800px;
+    padding: 10px;
+    border: 1px solid #444;
+    background-color: #333;
+    color: #fff;
+    font-size: 1.2em;
+    min-height: 50px;
+  }
+  

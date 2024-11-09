@@ -1,53 +1,41 @@
 const canvas = document.getElementById("visualizer");
 const canvasContext = canvas.getContext("2d");
+const transcriptDiv = document.getElementById("transcript");
 const WIDTH = canvas.width;
 const HEIGHT = canvas.height;
 
-// Set up audio processing
+// Set up audio processing for visualizer
 async function setupAudioProcessing() {
   try {
-    // Request access to the microphone
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     
-    // Create a new AudioContext and source
+    // Create audio context and connect stream
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
     const source = audioContext.createMediaStreamSource(stream);
-
-    // Create an analyser node for audio data processing
     const analyser = audioContext.createAnalyser();
-    analyser.fftSize = 2048; // Sets the number of data points in the frequency data
+    analyser.fftSize = 2048;
     source.connect(analyser);
-
-    // Data array for storing audio data
     const dataArray = new Uint8Array(analyser.fftSize);
-    
-    // Function to draw the waveform
+
     function draw() {
       requestAnimationFrame(draw);
-
-      // Get audio data and clear canvas
       analyser.getByteTimeDomainData(dataArray);
       canvasContext.clearRect(0, 0, WIDTH, HEIGHT);
-
-      // Style the waveform
       canvasContext.lineWidth = 2;
       canvasContext.strokeStyle = '#00ff00';
-
-      // Begin drawing path
       canvasContext.beginPath();
+
       const sliceWidth = WIDTH / analyser.fftSize;
       let x = 0;
 
       for (let i = 0; i < analyser.fftSize; i++) {
         const v = dataArray[i] / 128.0;
         const y = (v * HEIGHT) / 2;
-
         if (i === 0) {
           canvasContext.moveTo(x, y);
         } else {
           canvasContext.lineTo(x, y);
         }
-
         x += sliceWidth;
       }
 
@@ -55,12 +43,55 @@ async function setupAudioProcessing() {
       canvasContext.stroke();
     }
 
-    draw(); // Start the drawing loop
+    draw();
 
   } catch (err) {
     console.error("Error accessing audio:", err);
   }
 }
 
-// Call the function to set up audio processing
+// Set up speech recognition for live transcription
+function setupSpeechRecognition() {
+  // Check for SpeechRecognition support
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) {
+    transcriptDiv.innerHTML = "Speech Recognition not supported in this browser.";
+    return;
+  }
+
+  const recognition = new SpeechRecognition();
+  recognition.continuous = true; // Keep listening for continuous transcription
+  recognition.interimResults = true; // Show interim results for live updates
+
+  recognition.onresult = (event) => {
+    let interimTranscript = '';
+    let finalTranscript = '';
+
+    for (let i = 0; i < event.results.length; i++) {
+      const transcript = event.results[i][0].transcript;
+      if (event.results[i].isFinal) {
+        finalTranscript += transcript + ' ';
+      } else {
+        interimTranscript += transcript;
+      }
+    }
+
+    // Update the transcript div with final and interim results
+    transcriptDiv.innerHTML = finalTranscript + '<em>' + interimTranscript + '</em>';
+  };
+
+  recognition.onerror = (event) => {
+    console.error("Speech recognition error:", event.error);
+  };
+
+  recognition.onend = () => {
+    // Restart recognition if needed for continuous listening
+    recognition.start();
+  };
+
+  recognition.start();
+}
+
+// Initialize the audio visualizer and speech recognition
 setupAudioProcessing();
+setupSpeechRecognition();
