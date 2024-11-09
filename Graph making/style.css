@@ -1,0 +1,13 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+#axisInput, #dataInput {
+    margin: 10px;
+}
+
+canvas {
+    max-width: 600px;
+    margin: 20px auto;
+}

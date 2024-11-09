@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Graph Plotter</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Interactive Graph Plotter</h1>
+    <div>
+        <label for="graphType">Choose a graph type:</label>
+        <select id="graphType">
+            <option value="line">Line Graph</option>
+            <option value="bar">Bar Chart</option>
+        </select>
+    </div>
+    <div id="axisInput">
+        <label for="xLabel">X-Axis Label:</label>
+        <input type="text" id="xLabel">
+        <label for="xUnit">Units:</label>
+        <input type="text" id="xUnit">
+        <button id="addXValue">Add X Value</button>
+        <br>
+        <label for="yLabel">Y-Axis Label:</label>
+        <input type="text" id="yLabel">
+        <label for="yUnit">Units:</label>
+        <input type="text" id="yUnit">
+        <button id="addYValue">Add Y Value</button>
+    </div>
+    <div id="dataInput">
+        <h3>Data Points</h3>
+        <div id="xValues"></div>
+        <div id="yValues"></div>
+    </div>
+    <button id="plotButton">Plot Graph</button>
+    <canvas id="chartCanvas"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
