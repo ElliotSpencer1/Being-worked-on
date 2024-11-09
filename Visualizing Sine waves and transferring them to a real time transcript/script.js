@@ -22,7 +22,7 @@ async function setupAudioProcessing() {
       analyser.getByteTimeDomainData(dataArray);
       canvasContext.clearRect(0, 0, WIDTH, HEIGHT);
       canvasContext.lineWidth = 2;
-      canvasContext.strokeStyle = '#00ff00';
+      canvasContext.strokeStyle = '#FFF'; // use 00ff00 for green and the rest you know
       canvasContext.beginPath();
 
       const sliceWidth = WIDTH / analyser.fftSize;
