@@ -1,6 +1,9 @@
 let xData = [];
 let yData = [];
 let chart;
+let cw = window.innerWidth * 0.5;
+let ch =  window.innerHeight * 0.5;
+
 
 // Function to add X and Y values using the input fields
 document.getElementById("addXValue").addEventListener("click", () => {
@@ -55,8 +58,8 @@ function updateDataDisplay() {
 // Set canvas size based on window dimensions
 function resizeCanvas() {
     const canvas = document.getElementById("chartCanvas");
-    canvas.width = window.innerWidth * 0.5;
-    canvas.height = window.innerHeight * 0.5;
+    canvas.width = cw;
+    canvas.height = ch;
 }
 
 // Plotting function
