@@ -1,9 +1,6 @@
 let xData = [];
 let yData = [];
 let chart;
-let cw = window.innerWidth * 0.5;
-let ch =  window.innerHeight * 0.5;
-
 
 // Function to add X and Y values using the input fields
 document.getElementById("addXValue").addEventListener("click", () => {
@@ -11,29 +8,22 @@ document.getElementById("addXValue").addEventListener("click", () => {
     const graphType = document.getElementById("graphType").value;
     let xVal = xInput.value.trim();
 
-    // For line graph: Check if the user entered a string
     if (graphType === "line" && isNaN(xVal) && xVal) {
-        // Ask user if they want to proceed with the string input
         let proceed = confirm("You entered a string value for the X-axis, which is typically numeric for a line graph. Do you want to proceed?");
         if (proceed) {
-            xData.push(xVal);  // Accept string value for line graph
+            xData.push(xVal);
         } else {
-            return;  // Don't add the value if the user declines
+            return;
         }
-    }
-    // For bar chart: Allow string input without prompting
-    else if (graphType === "bar" && xVal) {
-        xData.push(xVal);  // Push string value for bar chart
-    }
-    // If it's a line graph and the input is numeric, allow the number to be added
-    else if (graphType === "line" && !isNaN(xVal) && xVal) {
-        xData.push(Number(xVal));  // Push numeric value for line graph
+    } else if (graphType === "bar" && xVal) {
+        xData.push(xVal);
+    } else if (graphType === "line" && !isNaN(xVal) && xVal) {
+        xData.push(Number(xVal));
     }
 
-    // Clear the input after adding value
     if (xVal) {
-        xInput.value = '';  // Clear input field after adding value
-        xInput.placeholder = "Enter X value"; // Reset placeholder
+        xInput.value = '';
+        xInput.placeholder = "Enter X value";
         updateDataDisplay();
     }
 });
@@ -42,9 +32,9 @@ document.getElementById("addYValue").addEventListener("click", () => {
     const yInput = document.getElementById("yValueInput");
     const yVal = yInput.value;
     if (yVal) {
-        yData.push(Number(yVal));  // Always push numeric Y values
-        yInput.value = '';  // Clear input field after adding value
-        yInput.placeholder = "Enter Y value"; // Reset placeholder
+        yData.push(Number(yVal));
+        yInput.value = '';
+        yInput.placeholder = "Enter Y value";
         updateDataDisplay();
     }
 });
@@ -55,11 +45,11 @@ function updateDataDisplay() {
     document.getElementById("yValues").innerText = `Y Values: ${yData.join(", ")}`;
 }
 
-// Set canvas size based on window dimensions
+// Resize canvas once when creating the chart
 function resizeCanvas() {
     const canvas = document.getElementById("chartCanvas");
-    canvas.width = cw;
-    canvas.height = ch;
+    canvas.width = window.innerWidth * 0.5;
+    canvas.height = window.innerHeight * 0.5;
 }
 
 // Plotting function
@@ -68,8 +58,10 @@ document.getElementById("plotButton").addEventListener("click", () => {
     const xLabel = document.getElementById("xLabel").value + ' (' + document.getElementById("xUnit").value + ')';
     const yLabel = document.getElementById("yLabel").value + ' (' + document.getElementById("yUnit").value + ')';
 
-    // Destroy previous chart instance if exists
-    if (chart) chart.destroy();
+    // Destroy previous chart instance if it exists
+    if (chart) {
+        chart.destroy();
+    }
 
     // Resize canvas before creating chart
     resizeCanvas();
@@ -79,7 +71,7 @@ document.getElementById("plotButton").addEventListener("click", () => {
     chart = new Chart(ctx, {
         type: graphType,
         data: {
-            labels: graphType === "bar" ? xData : xData,  // Use string X values for bar chart
+            labels: xData,
             datasets: [{
                 label: `${yLabel} vs ${xLabel}`,
                 data: yData,
@@ -87,22 +79,19 @@ document.getElementById("plotButton").addEventListener("click", () => {
                 borderColor: 'rgba(255, 99, 132, 1)',
                 borderWidth: 1,
                 fill: false,
-                tension: 0.3  // Add smoothing for line graph
+                tension: 0.3
             }]
         },
         options: {
             responsive: true,
-            maintainAspectRatio: false,
+            maintainAspectRatio: true,
             scales: {
                 x: { 
                     title: { display: true, text: xLabel },
-                    type: graphType === "bar" ? "category" : "linear"  // Use 'category' type for bar charts
+                    type: graphType === "bar" ? "category" : "linear"
                 },
                 y: { title: { display: true, text: yLabel }}
             }
         }
     });
 });
-
-// Resize canvas when window resizes
-window.addEventListener("resize", resizeCanvas);

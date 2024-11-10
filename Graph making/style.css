@@ -1,80 +1,105 @@
-/* Global Styling */
+/* Base styling */
 body {
     font-family: Arial, sans-serif;
+    background-color: #2e2e2e;
+    color: #ddd;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    min-height: 100vh;
     margin: 0;
-    background-color: #333;
-    color: #ddd;
+    padding: 0;
 }
 
-.container {
-    max-width: 800px;
-    width: 100%;
-    text-align: center;
+/* Controls container */
+#controls {
+    background-color: #3e3e3e;
+    border-radius: 10px;
     padding: 20px;
-    border-radius: 8px;
-    background-color: #444;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-}
-
-h1 {
-    color: #f0f0f0;
-    margin-bottom: 20px;
-}
-
-/* Form Controls */
-.control-group {
-    margin: 10px 0;
+    margin-top: 20px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     display: flex;
-    justify-content: center;
-    gap: 10px;
+    flex-direction: column;
+    align-items: center;
 }
 
-label, input, select, button {
-    color: #ddd;
-    background-color: #555;
-    border: 1px solid #666;
-    padding: 8px;
-    border-radius: 4px;
-}
-
-/* Input fields */
-input, select {
-    min-width: 150px;
-    color: #ddd; /* Set text color */
-}
-
-input::placeholder {
-    color: #aaa; /* Lighter placeholder text */
-}
-
-button {
-    cursor: pointer;
-    background-color: #777;
-}
-
-button:hover {
-    background-color: #888;
-}
-
-/* Data Display */
-#dataInput {
-    margin: 10px 0;
-}
-
-#dataInput div {
+#controls label {
+    font-weight: bold;
+    margin-bottom: 10px;
     color: #bbb;
 }
 
-/* Canvas */
-canvas {
+.input-group {
+    display: flex;
+    gap: 10px;
+    margin: 8px 0;
+}
+
+#controls input,
+#controls select,
+#controls button {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #666;
+    border-radius: 5px;
+    outline: none;
+    background-color: #4a4a4a;
+    color: #ddd;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+#controls input::placeholder {
+    color: #aaa;
+}
+
+#controls input:focus,
+#controls select:focus {
+    border-color: #ddd;
+}
+
+#controls button {
+    background-color: #5a5a5a;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#controls button:hover {
+    background-color: #4a4a4a;
+}
+
+.value-display {
+    width: 100%;
+    text-align: left;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #bbb;
+    background-color: #4a4a4a;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Chart container */
+#chartContainer {
+    width: 60vw;
+    height: 60vh;
+    max-height: 500px;
+    background-color: #2b2b2b;
+    padding: 15px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
     margin-top: 20px;
-    width: 50vw;  /* 50% of the viewport width */
-    height: 50vh; /* 50% of the viewport height */
-    max-width: 100%; 
-    background-color: #222;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#chartCanvas {
+    width: 100%;
+    height: 100%;
     border-radius: 8px;
+    border: 1px solid #d1d1d1;
+    background-color: #3e3e3e;
 }
