@@ -12,7 +12,7 @@ body {
   
   canvas {
     border: 1px solid #444;
-    background-color: #333;
+    background-color: #000;
   }
   
   #transcript {
@@ -20,7 +20,7 @@ body {
     width: 800px;
     padding: 10px;
     border: 1px solid #444;
-    background-color: #333;
+    background-color: #000;
     color: #fff;
     font-size: 1.2em;
     min-height: 50px;
