@@ -7,15 +7,17 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1 id="title">Unit 2 Revision</h1>
+    <div id="titleContainer">
+        <h1 id="title">Unit 2 Revision</h1>
+    </div>
     <button id="startButton" onclick="startRevision()">Start</button>
     <div id="questionContainer" class="hidden">
         <h1 id="questionTitle"></h1>
         <div class="button-container">
-            <button class="answerButton">Answer 1</button>
-            <button class="answerButton">Answer 2</button>
-            <button class="answerButton">Answer 3</button>
-            <button class="answerButton">Answer 4</button>
+            <button class="answerButton" id = "answer1" onclick="A1()">Answer 1</button>
+            <button class="answerButton" id = "answer2" onclick="A2()">Answer 2</button>
+            <button class="answerButton" id = "answer3" onclick="A3()">Answer 3</button>
+            <button class="answerButton" id = "answer4" onclick="A4()">Answer 4</button>
         </div>
     </div>
     <script src="script.js"></script>

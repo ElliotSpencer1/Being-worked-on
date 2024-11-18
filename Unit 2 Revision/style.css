@@ -4,11 +4,28 @@ html{
 }
 
 body {
-    background-image: linear-gradient(135deg, black, #333);
     font-family: Arial, sans-serif;
     text-align: center;
     margin: 0;
     padding: 0;
+    background-image: linear-gradient(135deg, black, #333);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: white;
+}
+
+#titleContainer {
+    background-color: #333;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px; /* Space between title and start button */
+}
+
+h1 {
+    color: black;
 }
 
 .hidden {
@@ -17,32 +34,35 @@ body {
 
 .button-container {
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
     margin-top: 20px;
 }
 
-.answerButton {
-    padding: 10px 20px;
+.answerButton, #startButton {
+    width: 12.5vw; /* 1/8 of the viewport width */
+    height: 12.5vh; /* 1/8 of the viewport height */
     font-size: 16px;
+    background-color: #333;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.answerButton:hover, #startButton:hover {
+    background-color: #999;
+    color: white;
+    cursor: pointer;
 }
 
 @media (max-width: 600px) {
     .button-container {
         flex-direction: column;
-    }
-}
-
-@media (min-width: 601px) and (max-width: 1024px) {
-    .button-container {
-        flex-direction: row;
-        flex-wrap: wrap;
-    }
-}
-
-@media (min-width: 1025px) {
-    .button-container {
-        flex-direction: row;
     }
 }
