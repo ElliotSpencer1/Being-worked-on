@@ -18,7 +18,7 @@ setInterval(() => {
 
 function startRevision() {
     document.getElementById('startButton').style.display = 'none';
-    document.getElementById('title').innerText = 'Your Question Here';
+    // document.getElementById('title').innerText = 'Your Question Here';
     document.getElementById('questionContainer').classList.remove('hidden');
 
     document.getElementById("title").innerText = "What is a Holder of information?";
