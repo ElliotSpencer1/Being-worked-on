@@ -80,6 +80,7 @@ function draw() {
         }
     }
     if(beansettings){
+        current.text = value.toFixed(1);
         if(plus.mouse.hovering()){
             plus.color = "#444";
             mouse.cursor = "pointer";
@@ -112,6 +113,7 @@ function newGame(){
 function loadGame(){
     window.open("game.html", "_self")
 }
+
 function settings(){
     newGameButton.remove();
     loadGameButton.remove();
@@ -120,29 +122,28 @@ function settings(){
     beansettings = new Sprite(windowWidth/2, windowHeight/2, windowHeight/2, windowHeight/2, "s");
     beansettings.color = "#333";
 
-    current = new Sprite(windowWidth/2, windowHeight/2, beansettings/15, beansettings/15, "s");
+    current = new Sprite(windowWidth/2, windowHeight/2, beansettings.w/15, beansettings.h/15, "s");
     current.text = value;
     current.color = "gray";
     current.textSize = "18";
     current.textColor = "white";
 
     try{
-        plus = new Sprite(windowWidth/2 - windowWidth/30*2, windowHeight/2, windowWidth/35, windowHeight/35);
+        plus = new Sprite(windowWidth/2 - windowWidth/30*2, windowHeight/2, windowWidth/35, windowHeight/35, "s");
         plus.textSize = "30";
         plus.text = "+";
         plus.textColor = "white";
         plus.color = "#333";
         console.log("plus");
 
-        minus = new Sprite(windowWidth/2 + windowWidth/30*2, windowHeight/2, windowWidth/35, windowHeight/35);
+        minus = new Sprite(windowWidth/2 + windowWidth/30*2, windowHeight/2, windowWidth/35, windowHeight/35, "s");
         minus.textSize = "30";
         minus.text = "-";
         minus.color = "#333";
         minus.textColor = "white";
         console.log("minus");
     }
-    catch{
-        console.log("error")
+    catch(error){
+        console.log("error: ", error);
     }
-    
 }
