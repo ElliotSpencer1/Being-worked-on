@@ -3,6 +3,7 @@ let newGameButton, loadGameButton, settingsButton, beansettings, plus, minus, cu
 if(localStorage.getItem("soundval") != null){
     value = localStorage.getItem("soundval");
     value = parseInt(value);
+    console.log("true")
 }
 else{
     value = 1;
@@ -37,6 +38,7 @@ function setup() {
 }
 
 function draw() {
+    background(backgroundImg)
     if(newGameButton && loadGameButton && settingsButton){
         if(newGameButton.mouse.hovering()){
             mouse.cursor = "pointer";
@@ -183,6 +185,52 @@ function draw() {
             plus.color = "#333";
             minus.color = "#333";
             mouse.cursor = "default";
+        }
+
+        if(back.mouse.hovering()){
+            back.textColor = "#8b0000";
+            mouse.cursor = "pointer";
+        }
+        if(!back.mouse.hovering()){
+            back.textColor = "white";
+            mouse.cursor = "default";
+        }
+
+        if(back.mouse.pressed()){
+            beansettings.remove();
+            current.remove();
+            current.visible = false;
+            beansettings.visible = false;
+            console.log("done4")
+            try{
+                plus.remove();
+                minus.remove();
+                console.log("done3")
+            }
+            catch(error){
+                console.log("error:", error)
+                console.log("done2")
+            }
+            back.remove();
+            console.log("done1")
+
+            newGameButton = new Sprite(windowWidth/2, windowHeight/2 - windowHeight/8, windowWidth/6, windowHeight/10, "s");
+            newGameButton.text = "New Game!";
+            newGameButton.color = "blue";
+            newGameButton.textSize = "30";
+        
+            loadGameButton = new Sprite(windowWidth/2, windowHeight/2, windowWidth/6, windowHeight/10, "s");
+            loadGameButton.text = "Load Game!";
+            loadGameButton.color = "blue";
+            loadGameButton.textSize = "30";
+        
+            settingsButton = new Sprite(windowWidth/2, windowHeight/2 + windowHeight/8, windowWidth/6, windowHeight/10, "s");
+            settingsButton.text = "Settings!";
+            settingsButton.color = "blue";
+            settingsButton.textSize = "30";
+            
+            localStorage.setItem("soundval", value);
+            console.log(localStorage.getItem("soundval"));
         }
     }
 }
