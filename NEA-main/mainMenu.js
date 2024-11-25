@@ -1,4 +1,4 @@
-let newGameButton, loadGameButton, settingsButton, beansettings, plus, minus, current, value;
+let newGameButton, loadGameButton, settingsButton, beansettings, plus, minus, current, value, back;
 
 if(localStorage.getItem("soundval") != null){
     value = localStorage.getItem("soundval");
@@ -80,14 +80,55 @@ function draw() {
         }
     }
     if(beansettings){
-        current.text = value.toFixed(1);
+        current.text = ((value.toFixed(1)) * 100) + "%";
+        current.text = Math.trunc(parseInt(current.text), 0) + "%";
         if(plus.mouse.hovering()){
             plus.color = "#444";
             mouse.cursor = "pointer";
         }
         if(plus.mouse.pressed()){
-            value += 0.1;
-            console.log("up")
+            if(value < 2){
+                value += 0.1;
+                console.log("up")
+            }
+            else{
+                setTimeout(() => {
+                    plus.textColor = "red";
+                    setTimeout(() => {
+                        plus.textColor = "white";
+                        setTimeout(() => {
+                            plus.textColor = "red";
+                            setTimeout(() => {
+                                plus.textColor = "white";
+                                setTimeout(() => {
+                                    plus.textColor = "red";
+                                    setTimeout(() => {
+                                        plus.textColor = "white";
+                                        setTimeout(() => {
+                                            plus.textColor = "red";
+                                            setTimeout(() => {
+                                                plus.textColor = "white";
+                                                setTimeout(() => {
+                                                    plus.textColor = "red";
+                                                    setTimeout(() => {
+                                                        plus.textColor = "white";
+                                                        setTimeout(() => {
+                                                            plus.textColor = "red";
+                                                            setTimeout(() => {
+                                                                plus.textColor = "white";
+                                                            },200)
+                                                        },200)
+                                                    },200)
+                                                },200)
+                                            },200)
+                                        },200)
+                                    },200)
+                                },200)
+                            },200)
+                        },200)
+                    },200)
+                },200)
+            }
         }
 
         if(minus.mouse.hovering()){
@@ -95,7 +136,47 @@ function draw() {
             mouse.cursor = "pointer";
         }
         if(minus.mouse.pressed()){
-            value -= 0.1;
+            if(value > 0.1){
+                value -= 0.1;
+            }
+            else{
+                setTimeout(() => {
+                    minus.textColor = "red";
+                    setTimeout(() => {
+                        minus.textColor = "white";
+                        setTimeout(() => {
+                            minus.textColor = "red";
+                            setTimeout(() => {
+                                minus.textColor = "white";
+                                setTimeout(() => {
+                                    minus.textColor = "red";
+                                    setTimeout(() => {
+                                        minus.textColor = "white";
+                                        setTimeout(() => {
+                                            minus.textColor = "red";
+                                            setTimeout(() => {
+                                                minus.textColor = "white";
+                                                setTimeout(() => {
+                                                    minus.textColor = "red";
+                                                    setTimeout(() => {
+                                                        minus.textColor = "white";
+                                                        setTimeout(() => {
+                                                            minus.textColor = "red";
+                                                            setTimeout(() => {
+                                                                minus.textColor = "white";
+                                                            }, 200)
+                                                        }, 200)
+                                                    }, 200)
+                                                }, 200)
+                                            }, 200)
+                                        }, 200)
+                                    }, 200)
+                                }, 200)
+                            }, 200)
+                        }, 200)
+                    }, 200)
+                }, 200)
+            }
         }
 
         if((!plus.mouse.hovering()) && (!minus.mouse.hovering)){
@@ -122,11 +203,16 @@ function settings(){
     beansettings = new Sprite(windowWidth/2, windowHeight/2, windowHeight/2, windowHeight/2, "s");
     beansettings.color = "#333";
 
-    current = new Sprite(windowWidth/2, windowHeight/2, beansettings.w/15, beansettings.h/15, "s");
+    current = new Sprite(windowWidth/2, windowHeight/2, beansettings.w/12, beansettings.h/12, "s");
     current.text = value;
     current.color = "gray";
     current.textSize = "18";
     current.textColor = "white";
+
+    back = new Sprite(windowWidth/2, beansettings.y - beansettings.h/2.5, windowWidth/6, windowHeight/50, "s");
+    back.text = "back";
+    back.textColor = "white";
+    back.color = "#444";
 
     try{
         plus = new Sprite(windowWidth/2 - windowWidth/30*2, windowHeight/2, windowWidth/35, windowHeight/35, "s");
