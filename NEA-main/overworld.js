@@ -13,6 +13,8 @@ let idleVertical = true
 let swordBoundary = 111
 let sLeft = false
 let sRight = false
+let enemies, move, attacking;
+let enemyspawnbrick, firstpass;
 
 function preload() {
 
@@ -40,6 +42,7 @@ function preload() {
 
 }
 
+firstpass = false;
 
 function guySetup(){
   guy = new Sprite(350,350,58,58,'d')
@@ -55,6 +58,9 @@ function guySetup(){
     idle:{row:0, frames:1}
   })
   guy.scale = 0.7
+
+  guy.cooldown = false;
+  guy.health = 200;
 }
 
 function swordSetup(){
@@ -84,6 +90,12 @@ function shieldSetup(){
 }
 
 function Map_Setup() {
+
+  enemyspawnbrick = new Group();
+  enemyspawnbrick.collider = "none";
+  enemyspawnbrick.w = tileSize;
+  enemyspawnbrick.h = tileSize;
+  enemyspawnbrick.tile = "F";
 
   walls = new Group();
   walls.collider = 's'
@@ -208,6 +220,18 @@ function setup() {
     "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
     "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
     "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
+    "gggggggggggggggggggggggggggFgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
+    "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggFgggggggggggggggggggggg",
+    "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
+    "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
+    "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
+    "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
+    "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
+    "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggFgggggggggggggggggggggggggggggggggggggggggg",
+    "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
+    "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
+    "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
+    "gggggggggggggggggggggggggggggggggFgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
     "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
     "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
     "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
@@ -220,6 +244,7 @@ function setup() {
     "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
     "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
     "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
+    "gggggggggggggggggggggggggggggggggggFgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
     "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
     "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
     "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
@@ -227,25 +252,12 @@ function setup() {
     "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
     "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
     "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
-    "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
-    "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
-    "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
-    "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
-    "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
-    "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
-    "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
-    "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
-    "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
-    "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
-    "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
-    "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
-    "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
-    "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
+    "gggggggFggggggggggggggggggggggggggggggggggggggggggggggggggggggggggFggggggggggggggggggggggggggggggggg",
     "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
     "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
     "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
     "ggggggggggggggggggggz...zggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
-    "zzzzzzzzzzzzzzzzzzzzz...zzzzzzzzzzzzzzzzzzzzzzzzzzzggggggggggggggggggggggggggggggggggggggggggggggggg",
+    "zzzzzzzzzzzzzzzzzzzzz...zzzzzzzzzzzzzzzzzzzzzzzzzzzgggggggggggggggggggggggggggggggggggggggggggFggggg",
     "bbbbbbbbbbbbbbbbbbbbb...bbbbbbbbbbbbbbbbbbbbbbbbbbzggggggggggggggggggggggggggggggggggggggggggggggggg",
     "bbbbbbbbbbbbbbbbbbbbb...bbbbbbbbbbbbbbbbbbbbbbbbbbzzzzzzzzzzzzzzzzzzzzzzzggggggggggggggggggggggggggg",
     "bbbbbbbbbbbbbbbbbbbbz...zbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbzggggggggggggggggggggggggggg",
@@ -254,17 +266,17 @@ function setup() {
     "ggggggggggggggggggggggggggggggggggggggggggggggzbbbzzzzzzzzzzzzzzzzzzzbbbzggggggggggggggggggggggggggg",
     "ggggggggggggggggggggggggggggggggggggggggggggggzbbbzzzzzzzzzzzzzzzzzzzbbbzggggggggggggggggggggggggggg",
     "ggggggggggggggggggggggggggggggggSSggggggggggggzbbbzgggggggggggggggggzbbbzggggggggggggggggggggggggggg",
-    "gggggggggggggggggggggggggggggggSWWWSggggggggggzbbbzgggggggggggggggggzbbbzggggggggggggggggggggggggggg",
-    "gggggggggggggggggggggggggggggggWWWWWWWSSSgggggzbbbzgggggggggggggggggzbbbzggggggggggggggggggggggggggg",
+    "gggFgggggggggggggggggggggggggggSWWWSggggggggggzbbbzgggggggggggggggggzbbbzggggggggggggggggggggggggggg",
+    "gggggggggggggggggggFgggggggggggWWWWWWWSSSgggggzbbbzgggggggggggggggggzbbbzggggggggggggggggggggggggggg",
     "gggggggggggggggggggggggggggggggWWWWWWWWWWWSgggzbbbzggggggggLRgggggggzbbbzggggggggggggggggggggggggggg",
     "gggggggggggggggggggggggggggggggSWWWWWWWWWWSSggzbbbzgggggggglrgggggggzbbbzggggggggggggggggggggggggggg",
     "ggggggggggggggggggggggggggggggSWWWWWWWWWWWWSggzbbbzgggggggggggggggggzbbbzggggggggggggggggggggggggggg",
     "gggggggggggggggggggggggggggggggWWWWWWWWWWWWSggzbbbzgggggggggggggggggzbbbzggggggggggggggggggggggggggg",
     "ggggggggggggggggggggggggggggggggWWWWWWWWWWWSggzbbbzgggggggggggggggggzbbbzggggggggggggggggggggggggggg",
-    "ggggggggggggggggggggggggggggggggWWWWWWWWWWSSggzbbbzgggggggggggggggggzbbbzggggggggggggggggggggggggggg",
+    "ggggggggggFgggggggggggggggggggggWWWWWWWWWWSSggzbbbzgggggggggggggggggzbbbzggggggggggggggggggggggggggg",
     "gggggggggggggggggggggggggggggggggSWWWWWWWWSgggzbbbzggggggz...zggggggzbbbzggzzzzggggggggggggggggggggg",
     "ggggggggggggggggggggggggggggggggggSSSSWWWSggggzbbbzzzzzzzz...zzzzzzzzbbbzzzzbbnggzzzzzzzzzzzzzzzzzzz",
-    "ggggggggggggggggggggggggggggggggggggSSSSSgggggzbbbbbbbbbbb...bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "gggggggggggggggggggggggggggggFggggggSSSSSgggggzbbbbbbbbbbb...bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
     "ggggggggggggggggggggggggggggggggggggggggggggggzbbbbbbbbbbb...bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
     "gggggggggggggggz...zggggggggggggggggggggggggggzbbbbbbbbbbz...zbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
     "zzzzzzzzzzzzzzzz...zzzzzzzzzzzzzzzzzzzzzzzzzzzzbbbzzzzzzzzSSSzzzzzzzzzzzzzzzzzzznZZZzzzzzzzzzzzzzzzz",
@@ -423,6 +435,36 @@ function setup() {
   ],
   16, 16, tileSize, tileSize)
   tileMap2.layer = 4
+
+  // fresh code
+
+
+  // enemies can be spawned by adding an "x" into the tilemap
+
+  enemies = new Group();
+  enemies.width = 20;
+  enemies.height = 20;
+  enemies.color = "green";
+  enemies.tile = "x";
+  enemies.collider = "d";
+  enemies.startX = 0;
+  enemies.moveCount = 0;
+  enemies.health = 100;
+  enemies.cooldown = false;
+
+  new enemies.Sprite(359,  358, 20, 20);
+
+  setInterval(() => {
+    if(move){
+      move = false;
+    }
+    else{
+      move = true;
+    }
+  }, 5000)
+
+
+  // end of fresh code
 }
 
 function draw() {
@@ -432,6 +474,86 @@ function draw() {
   Movement()
   if (guy.overlaps(trapDoorBL) || guy.overlaps(trapDoorBR) || guy.overlaps(trapDoorTL) || guy.overlaps(trapDoorTR)){
     enterDungeon()
+  }
+  enemypathfinding();
+}
+
+function enemypathfinding(){
+  if(!firstpass){
+    let count = 0;
+    for(b of enemyspawnbrick){
+      if(count < enemyspawnbrick.length){
+        new enemies.Sprite(b.x, b.y);
+        count++
+      }
+      if(count > enemyspawnbrick.length - 1){
+        firstpass = true;
+      }
+    }
+  }
+
+  if(enemies){
+    for(e of enemies){
+      e.vel.x = 0;
+      e.vel.y = 0;
+      e.rotationLock = true;
+
+      e.startX = e.pos.x;
+      e.moveCount = 0;
+
+      if((move)){
+        e.moveTo(e.startX + 20);
+      }
+      if((!move)){
+        e.moveTo(e.startX - 20);
+      }
+
+      let distance = dist(guy.x, guy.y, e.x, e.y);
+
+      if(distance <= 100){
+        e.moveTo(guy.x, guy.y)
+      }
+
+      if(sword.collides(e)){
+        e.health -= 25;
+        e.cooldown = true;
+        console.log("bean")
+        setTimeout(() => {
+          e.cooldown = false;
+        }, 25);
+      }
+
+      if(e.health == 75){
+        e.color = "Yellow";
+      }
+      if(e.health == 50){
+        e.color = "Orange";
+      }
+      if(e.health == 25){
+        e.color = "Red";
+      }
+      if(e.health == 0){
+        // add any drops from the enemy here e.g. 250 silver (this can be done by using new coins.Sprite(e.x, e.y));
+        e.color = "black";
+        e.attacking = true;
+        e.vel.x = 0;
+        e.vel.y = 0;
+      }
+      if(e.health == 0){
+        e.remove();
+      }
+
+      if((e.colliding(guy)) && !guy.cooldown){
+        guy.health -= 25;
+        guy.cooldown = true;
+        setTimeout(() => {
+          guy.cooldown = false;
+        }, 25)
+      }
+
+
+      
+    }
   }
 }
 
