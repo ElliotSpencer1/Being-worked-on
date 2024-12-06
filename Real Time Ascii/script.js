@@ -8,14 +8,17 @@ async function setupCamera() {
     video.srcObject = stream;
 
     video.addEventListener('loadeddata', () => {
-        setInterval(drawAscii, 100);
+        drawAscii();
+        setInterval(drawAscii, 33);  // Updates around 30 times per second for smoother output
     });
 }
 
 function drawAscii() {
+    const width = window.innerWidth / 6;
+    const height = window.innerHeight / 12;
     const canvas = document.createElement('canvas');
-    canvas.width = video.videoWidth / 10;
-    canvas.height = video.videoHeight / 10;
+    canvas.width = width;
+    canvas.height = height;
 
     const context = canvas.getContext('2d');
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
