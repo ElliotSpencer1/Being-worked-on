@@ -15,6 +15,8 @@ let sLeft = false
 let sRight = false
 let enemies, move, attacking;
 let enemyspawnbrick, firstpass, boss;
+let thresholdDistance = 50;
+let circleStep = 0;
 
 function preload() {
 
@@ -478,7 +480,6 @@ function setup() {
 }
 
 function draw() {
-  let circleStep = 0;
   clear()
   Camera_Setup()
   swordDraw()
@@ -511,17 +512,19 @@ function bossstuff(){
 }
 
 function moveBossInCircles() {
-  circleStep++;
-  if (circleStep < 60) {
-    boss.setSpeed(2, 90); // Move down
-  } else if (circleStep < 90) {
-    boss.setSpeed(2, 0); // Move right
-  } else if (circleStep < 150) {
-    boss.setSpeed(2, 270); // Move up
-  } else if (circleStep < 180) {
-    boss.setSpeed(2, 180); // Move left
-  } else {
-    circleStep = 0; // Reset the step to loop the pattern
+  if(boss){
+    circleStep++;
+    if (circleStep < 60) {
+      boss.moveTo(boss.x, boss.y++)
+    } else if (circleStep < 90) {
+      boss.moveTo(boss.x++, boss.y) // Move right
+    } else if (circleStep < 150) {
+      boss.moveTo(boss.x, boss.y--) // Move up
+    } else if (circleStep < 180) {
+      boss.moveTo(boss.x--, boss.y) // Move left
+    } else {
+      circleStep = 0; // Reset the step to loop the pattern
+    }
   }
 }
 
