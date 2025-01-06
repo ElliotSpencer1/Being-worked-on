@@ -1,6 +1,6 @@
 const tileSize = 18
 let movementActive = true
-let walls, wall, floors, tileMap, grass, boundary, doors, trapDoorTL, trapDoorTR, trapDoorBL, trapDoorBR
+let walls, wall, floors, tileMap, grass, boundary, doors, trapDoorTL, trapDoorTR, trapDoorBL, trapDoorBR;
 let wallImg, grassImg, boundaryImg, trapDoorOpenTLImg, trapDoorOpenTRImg,trapDoorOpenBLImg, shieldImg, trapDoorOpenBRImg, trapDoorClosedTLImg, trapDoorClosedTRImg, trapDoorClosedBLImg, trapDoorClosedBRImg
 let countdownTime = 0.15; // Countdown time in seconds
 let startTime;
@@ -14,7 +14,7 @@ let swordBoundary = 111
 let sLeft = false
 let sRight = false
 let enemies, move, attacking;
-let enemyspawnbrick, firstpass;
+let enemyspawnbrick, firstpass, boss;
 
 function preload() {
 
@@ -176,6 +176,17 @@ function Map_Setup() {
   trapDoorBR.img = trapDoorClosedBRImg
   trapDoorBR.scale = 0.4
 
+  enemies = new Group();
+  enemies.width = 20;
+  enemies.height = 20;
+  enemies.color = "green";
+  enemies.tile = "x";
+  enemies.collider = "d";
+  enemies.startX = 0;
+  enemies.moveCount = 0;
+  enemies.health = 100;
+  enemies.cooldown = false;
+
   doors = new Group();
   doors.collider = 's'
   doors.w = tileSize
@@ -185,6 +196,17 @@ function Map_Setup() {
   stairs.tile = 'n'
   //stairs.img = stairsImg
   stairs.color = '#686767'
+
+  // boss
+  boss = new Group();
+  boss.collider = "s";
+  boss.tile = "P";
+  boss.color = "red";
+  boss.w = tileSize * 1.5
+  boss.h = tileSize * 1.5
+  boss.health = 100;
+  boss.cooldown = false;
+
 }
 
 function Camera_Setup() {
@@ -258,7 +280,7 @@ function setup() {
     "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
     "ggggggggggggggggggggz...zggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
     "zzzzzzzzzzzzzzzzzzzzz...zzzzzzzzzzzzzzzzzzzzzzzzzzzgggggggggggggggggggggggggggggggggggggggggggFggggg",
-    "bbbbbbbbbbbbbbbbbbbbb...bbbbbbbbbbbbbbbbbbbbbbbbbbzggggggggggggggggggggggggggggggggggggggggggggggggg",
+    "bbbbbbbbbbbbbbbbbbbbb.P.bbbbbbbbbbbbbbbbbbbbbbbbbbzggggggggggggggggggggggggggggggggggggggggggggggggg",
     "bbbbbbbbbbbbbbbbbbbbb...bbbbbbbbbbbbbbbbbbbbbbbbbbzzzzzzzzzzzzzzzzzzzzzzzggggggggggggggggggggggggggg",
     "bbbbbbbbbbbbbbbbbbbbz...zbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbzggggggggggggggggggggggggggg",
     "zzzzzzzzzzzzzzzzzzzzzgggzzzzzzzzzzzzzzzzzzzzzzzbbbbbbbbbbbbbbbbbbbbbbbbbzggggggggggggggggggggggggggg",
@@ -441,18 +463,7 @@ function setup() {
 
   // enemies can be spawned by adding an "x" into the tilemap
 
-  enemies = new Group();
-  enemies.width = 20;
-  enemies.height = 20;
-  enemies.color = "green";
-  enemies.tile = "x";
-  enemies.collider = "d";
-  enemies.startX = 0;
-  enemies.moveCount = 0;
-  enemies.health = 100;
-  enemies.cooldown = false;
-
-  new enemies.Sprite(359,  358, 20, 20);
+  new enemies.Sprite(359, 358, 20, 20);
 
   setInterval(() => {
     if(move){
@@ -463,11 +474,11 @@ function setup() {
     }
   }, 5000)
 
-
   // end of fresh code
 }
 
 function draw() {
+  let circleStep = 0;
   clear()
   Camera_Setup()
   swordDraw()
@@ -476,6 +487,42 @@ function draw() {
     enterDungeon()
   }
   enemypathfinding();
+  bossstuff();
+}
+
+function bossstuff(){
+  let distance = dist(boss.position.x, boss.position.y, player.position.x, player.position.y);
+
+  if (distance < thresholdDistance) {
+    // Move boss towards player
+    boss.moveTo(guy.x, guy.y);
+  } else {
+    // Move boss in a circular pattern
+    moveBossInCircles();
+  }
+
+  if(sword.collides(boss)){
+    boss.health -= 25;
+    boss.cooldown = true;
+    setTimeout(() => {
+      boss.cooldown = false;
+    }, 25);
+  }
+}
+
+function moveBossInCircles() {
+  circleStep++;
+  if (circleStep < 60) {
+    boss.setSpeed(2, 90); // Move down
+  } else if (circleStep < 90) {
+    boss.setSpeed(2, 0); // Move right
+  } else if (circleStep < 150) {
+    boss.setSpeed(2, 270); // Move up
+  } else if (circleStep < 180) {
+    boss.setSpeed(2, 180); // Move left
+  } else {
+    circleStep = 0; // Reset the step to loop the pattern
+  }
 }
 
 function enemypathfinding(){
