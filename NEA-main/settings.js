@@ -1,6 +1,6 @@
 function preload() {
 
-    backgroundImg = loadImage('backgroundImg1.png')
+    backgroundImg = loadImage('images/backgroundImg1.png')
   
 }
 

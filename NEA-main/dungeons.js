@@ -30,9 +30,9 @@ const levels = [
 
 function preload() {
 
-  floorImg = loadImage('ZeldaTileMap.png')
-  wallImg = loadImage('ZeldaWall.png')
-  stairsImg = loadImage('stairsPic2.png')
+  floorImg = loadImage('images/ZeldaTileMap.png')
+  wallImg = loadImage('images/ZeldaWall.png')
+  stairsImg = loadImage('images/stairsPic2.png')
 
 }
 

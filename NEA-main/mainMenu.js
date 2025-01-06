@@ -11,7 +11,7 @@ else{
 
 function preload() {
 
-    backgroundImg = loadImage('backgroundImg11.png')
+    backgroundImg = loadImage('images/backgroundImg11.png')
   
 }
 
