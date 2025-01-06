@@ -491,7 +491,7 @@ function draw() {
 }
 
 function bossstuff(){
-  let distance = dist(boss.position.x, boss.position.y, player.position.x, player.position.y);
+  let distance = dist(boss.x, boss.y, guy.x, guy.y);
 
   if (distance < thresholdDistance) {
     // Move boss towards player
