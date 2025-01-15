@@ -201,8 +201,9 @@ function setup(){
 
     assigningvariables();
 
-    player = new Sprite(windowWidth/2, windowHeight/2, 15,15, "s");
+    player = new Sprite(windowWidth/2, windowHeight/2, 15,15, "d");
     player.color = "blue";
+    player.rotationLock = true;
     
     world.gravity.y = 9.80665;
 
@@ -220,15 +221,20 @@ function draw(){
 
 function basicmovement(){
     // CHECK FOR GROUND WHEN W
-    if(kb.pressing("W")){
-        player.vel.y += 10;
+    if((kb.presses("UP"))){
+        if((player.colliding(underground)) || (player.colliding(grass) || player.colliding())){
+            player.vel.y += 5;
+        }
+        else{
+            console.log("not grounded");
+        }
     }
 
-    if(kb.pressing("D")){
+    if(kb.pressing("RIGHT")){
         player.x += base;
     }
 
-    if(kb.pressing("A")){
+    if(kb.pressing("LEFT")){
         player.x -= base;
     }
 }
