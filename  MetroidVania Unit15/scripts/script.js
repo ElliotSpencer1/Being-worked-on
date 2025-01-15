@@ -3,7 +3,7 @@ let tutorial;
 // characters
 let player;
 // functionalities
-let base, tilesize;
+let base, tilesize, underground, outerbound;
 
 
 function assigningvariables(){
@@ -18,6 +18,38 @@ function mapdesignenvironment(){
     outerbound.w = tilesize;
     outerbound.h = tilesize;
     outerbound.tile = "Z";
+    outerbound.image = "images/outerbound.png";
+
+    underground = new Group();
+    underground.w = tilesize;
+    underground.h = tilesize;
+    underground.tile = "t";
+    underground.image = "images/underground.png";
+
+    vines = new Group();
+    vines.w = tilesize;
+    vines.h = tilesize;
+    vines.tile = "t";
+    vines.image = "images/vines.png";
+
+    spikes = new Group();
+    spikes.w = tilesize;
+    spikes.h = tilesize;
+    spikes.tile = "s";
+    spikes.image = "images/spikes.png";
+
+    acid = new Group();
+    acid.w = tilesize;
+    acid.h = tilesize;
+    acid.tile = "G";
+    acid.image = "images/acid.png";
+
+    grass = new Group();
+    grass.w = tilesize;
+    grass.h = tilesize;
+    grass.tile = "g";
+    grass.image = "images/grass.png";
+
 
     // incomplete tilemap;
     tilemap = new Tiles ([ 
