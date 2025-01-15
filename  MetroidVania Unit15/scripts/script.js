@@ -19,36 +19,75 @@ function mapdesignenvironment(){
     outerbound.h = tilesize;
     outerbound.tile = "Z";
     outerbound.image = "images/outerbound.png";
+    outerbound.collider = "s";
 
     underground = new Group();
     underground.w = tilesize;
     underground.h = tilesize;
     underground.tile = "t";
     underground.image = "images/underground.png";
+    underground.collider = "s";
 
     vines = new Group();
     vines.w = tilesize;
     vines.h = tilesize;
-    vines.tile = "t";
+    vines.tile = "f";
     vines.image = "images/vines.png";
+    vines.collider = "s";
 
     spikes = new Group();
     spikes.w = tilesize;
     spikes.h = tilesize;
     spikes.tile = "s";
     spikes.image = "images/spikes.png";
+    spikes.collider = "s";
 
     acid = new Group();
     acid.w = tilesize;
     acid.h = tilesize;
     acid.tile = "G";
     acid.image = "images/acid.png";
+    acid.collider = "s";
 
     grass = new Group();
     grass.w = tilesize;
     grass.h = tilesize;
     grass.tile = "g";
     grass.image = "images/grass.png";
+    grass.collider = "s";
+
+    filler = new Group();
+    filler.w = tilesize;
+    filler.h = tilesize;
+    filler.tile = "b";
+    filler.color = "black";
+    filler.collider = "s";
+
+    flyingtype = new Group();
+    flyingtype.w = 8;
+    flyingtype.h = 8;
+    flyingtype.tile = "F";
+    flyingtype.collider = "s";
+
+    explosiontype = new Group();
+    explosiontype.w = 10;
+    explosiontype.h = 10;
+    explosiontype.tile = "W";
+    explosiontype.collider = "s";
+
+    basegroundtype = new Group();
+    basegroundtype.w = 12;
+    basegroundtype.h = 12;
+    basegroundtype.tile = "X";
+    basegroundtype.collider = "s";
+
+    bossuno = new Group();
+    bossuno.w = 40;
+    bossuno.h = 10;
+    bossuno.tile = "v";
+    bossuno.collider = "s";
+
+
 
 
     // incomplete tilemap;
@@ -91,7 +130,7 @@ function mapdesignenvironment(){
         "Zt................................................................................................tZ",
         "Zt................................................................................................tZ",
         "Zt................................................................................................tZ",
-        "Zt..................X......W.........k..........................X........W.....sssssssss..........tZ",
+        "Zt..................X......W.........X..........................X........W.....sssssssss..........tZ",
         "Zt.....ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt..........tZ",
         "Zt.....t.......................................tt......................................t..........tZ",
         "Zt.....t.......................................tt......................................t..........tZ",
@@ -120,7 +159,7 @@ function mapdesignenvironment(){
         "Zt.....t...........t...........................tt.................................................tZ",
         "Zt.....t...........t...........................tt.................................................tZ",
         "Zt.....t...........t...........................tt.................................................tZ",
-        "Zt.....t.....=.....t...........................tt.................................................tZ",
+        "Zt.....t...........t...........................tt.................................................tZ",
         "Zt.....tts.ttttttttt...ttt.....................tt.................................................tZ",
         "Zt.....tts.t.......t...t.......................tt.................................................tZ",
         "Zt.....tts.t.......t...t.......................tt.................................................tZ",
