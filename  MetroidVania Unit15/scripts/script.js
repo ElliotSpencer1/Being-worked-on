@@ -3,16 +3,21 @@ let tutorial;
 // characters
 let player;
 // functionalities
-let base;
+let base, tilesize;
 
 
 function assigningvariables(){
     base = 2;
 
+    tilesize = 18;
 }
 
 function mapdesignenvironment(){
 
+    outerbound = new Group();
+    outerbound.w = tilesize;
+    outerbound.h = tilesize;
+    outerbound.tile = "Z";
 
     // incomplete tilemap;
     tilemap = new Tiles ([ 
