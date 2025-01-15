@@ -9,18 +9,9 @@ let base;
 function assigningvariables(){
     base = 2;
 
-
 }
 
-function setup(){
-    createCanvas(windowWidth, windowHeight)
-
-    assigningvariables();
-
-    player = new Sprite(windowWidth/2, windowHeight/2, 15,15, "s");
-    player.color = "blue";
-    
-    world.gravity.y = 9.80665;
+function mapdesignenvironment(){
 
 
     // incomplete tilemap;
@@ -126,7 +117,21 @@ function setup(){
         "ZttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttZ",
         "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ",
         ], 0,0, 18, 18
-        );
+    );
+}
+
+function setup(){
+    createCanvas(windowWidth, windowHeight)
+
+    assigningvariables();
+
+    player = new Sprite(windowWidth/2, windowHeight/2, 15,15, "s");
+    player.color = "blue";
+    
+    world.gravity.y = 9.80665;
+
+
+    mapdesignenvironment();
 }
 
 
