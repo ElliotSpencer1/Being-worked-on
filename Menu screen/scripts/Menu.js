@@ -31,27 +31,27 @@ function setup(){
     settings.textSize = 40;
     settings.color = "#3D5A80";
 
-    plus = new Sprite(windowWidth/2 - 75, windowHeight/2 + windowHeight/3, 50, 50, "n");
+    backdrop = new Sprite(windowWidth/2, windowHeight/2, windowWidth*0.8, windowHeight*0.8, "n");
+    backdrop.color = "#3D5A80";
+    backdrop.visible = false;
+
+    plus = new Sprite(windowWidth/2 - 100, windowHeight/2 + windowHeight/3, 50, 50, "n");
     plus.text = "+";
     plus.textSize = 20;
     plus.color = "#98C1D9";
     plus.visible = false;
 
-    minus = new Sprite(windowWidth/2 + 75, windowHeight/2 + windowHeight/3, 50, 50, "n");
+    minus = new Sprite(windowWidth/2 + 100, windowHeight/2 + windowHeight/3, 50, 50, "n");
     minus.text = "-";
     minus.textSize = 20;
     minus.color = "#98C1D9";
     minus.visible = false;
 
-    current = new Sprite(windowWidth/2, windowHeight/2 + windowHeight/3, 75, 50, "n");
+    current = new Sprite(windowWidth/2, windowHeight/2 + windowHeight/3, 125, 50, "n");
     current.text = value + "%";
     current.textSize = 20;
     current.color = "#98C1D9";
     current.visible = false;
-
-    backdrop = new Sprite(windowWidth/2, windowHeight/2, windowWidth/2, windowHeight/2, "n");
-    backdrop.color = "#3D5A80";
-    backdrop.visible = false;
 
     back = new Sprite(windowWidth/2 - backdrop.w/2, windowHeight/2 - backdrop.h/2, 75, 50, "n");
     back.color = "98C1D9";
@@ -128,6 +128,50 @@ function mainhandler(){
 
 function settingshandler(){
     if(firstpass){
+        if(plus.mouse.hovering()){
+            plus.color = "#E0FBFC";
+            mouse.cursor = "pointer";
+        }
+        if(!plus.mouse.hovering()){
+            plus.color = "#98C1D9";
+            mouse.cursor = "default";
+        }
+
+        if(minus.mouse.hovering()){
+            minus.color = "#E0FBFC";
+            mouse.cursor = "pointer";
+        }
+        if(!minus.mouse.hovering()){
+            minus.color = "#98C1D9";
+            mouse.cursor = "default";
+        }
+
+        if(back.mouse.hovering()){
+            back.color = "#E0FBFC";
+            mouse.cursor = "pointer";
+        }
+        if(!back.mouse.hovering()){
+            back.color = "#98C1D9";
+            mouse.cursor = "default";
+        }
+
+        current.text = "Music " + value + "%";
+
+        if(plus.mouse.pressed()){
+            value += 20;
+        }
+        if(minus.mouse.pressed()){
+            value -= 20;
+        }
+        if(back.mouse.pressed()){
+            localStorage.setItem("value", value)
+
+            Main = true;
+            firstpass = false;
+        }
+
+
+
 
     }
 }
