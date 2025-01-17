@@ -1,248 +1,120 @@
-// map locations
-let tutorial;
-// characters
-let player;
-// functionalities
-let base, tilesize, underground, outerbound;
+let beancoin
 
+let mapA, mapB, mapC, mapD;
 
-function assigningvariables(){
-    base = 2;
-
-    tilesize = 18;
-}
-
-function mapdesignenvironment(){
-
-    outerbound = new Group();
-    outerbound.w = tilesize;
-    outerbound.h = tilesize;
-    outerbound.tile = "Z";
-    outerbound.image = "images/outerbound.png";
-    outerbound.collider = "s";
-
-    underground = new Group();
-    underground.w = tilesize;
-    underground.h = tilesize;
-    underground.tile = "t";
-    underground.image = "images/underground.png";
-    underground.collider = "s";
-
-    vines = new Group();
-    vines.w = tilesize;
-    vines.h = tilesize;
-    vines.tile = "f";
-    vines.image = "images/vines.png";
-    vines.collider = "s";
-
-    spikes = new Group();
-    spikes.w = tilesize;
-    spikes.h = tilesize;
-    spikes.tile = "s";
-    spikes.image = "images/spikes.png";
-    spikes.collider = "s";
-
-    acid = new Group();
-    acid.w = tilesize;
-    acid.h = tilesize;
-    acid.tile = "G";
-    acid.image = "images/acid.png";
-    acid.collider = "s";
-
-    grass = new Group();
-    grass.w = tilesize;
-    grass.h = tilesize;
-    grass.tile = "g";
-    grass.image = "images/grass.png";
-    grass.collider = "s";
-
-    filler = new Group();
-    filler.w = tilesize;
-    filler.h = tilesize;
-    filler.tile = "b";
-    filler.color = "black";
-    filler.collider = "s";
-
-    flyingtype = new Group();
-    flyingtype.w = 8;
-    flyingtype.h = 8;
-    flyingtype.tile = "F";
-    flyingtype.collider = "s";
-
-    explosiontype = new Group();
-    explosiontype.w = 10;
-    explosiontype.h = 10;
-    explosiontype.tile = "W";
-    explosiontype.collider = "s";
-
-    basegroundtype = new Group();
-    basegroundtype.w = 12;
-    basegroundtype.h = 12;
-    basegroundtype.tile = "X";
-    basegroundtype.collider = "s";
-
-    bossuno = new Group();
-    bossuno.w = 40;
-    bossuno.h = 10;
-    bossuno.tile = "v";
-    bossuno.collider = "s";
-
-
-
-
-    // incomplete tilemap;
-    tilemap = new Tiles ([ 
-        "....................................................................................................",
-        "....................................................................................................",
-        "....................................................................................................",
-        "....................................................................................................",
-        "....................................................................................................",
-        "....................................................................................................",
-        "...................................................................................................Z",
-        "Z..................................................................................................Z",
-        "Z..................................................................................................Z",
-        "Z..................................................................................................Z",
-        "Z..................................................................................................Z",
-        "Z..................................................................................................Z",
-        "Z..................................................................................................Z",
-        "Z..................................................................................................Z",
-        "Z..................................................................................................Z",
-        "Z..................................................................................................Z",
-        "Z..................................................................................................Z",
-        "ZZ.................................................................................................Z",
-        "Zb.................................................................................................Z",
-        "Zb.................................................................................................Z",
-        "Zb.................................................................................................Z",
-        "Zb.................................................................................................Z",
-        "Zb.................................................................................................Z",
-        "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ........ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        "ZttttttttttttttttttttttttttttttttttttttttttttttZ........ZttttttttttttttttttttttttttttttttttttttttttZ",
-        "ZtfffffffffffffffffffffffffffffffffffffffffffftZ........ZtfffffffffffffffffffffffffffffffffffffffftZ",
-        "Zt............................................tZ........Zt........................................tZ",
-        "Zt............................................tZ........Zt........................................tZ",
-        "Zt............................................tZ........Zt........................................tZ",
-        "Zt............................................tZ........Zt........................................tZ",
-        "Zt............................................tZ........Zt........................................tZ",
-        "Zt............................................tZ........Zt..........F.............................tZ",
-        "Zt................................................................................................tZ",
-        "Zt........F................F..............F.......................................................tZ",
-        "Zt..........................................................................F.....................tZ",
-        "Zt................................................................................................tZ",
-        "Zt................................................................................................tZ",
-        "Zt................................................................................................tZ",
-        "Zt..................X......W.........X..........................X........W.....sssssssss..........tZ",
-        "Zt.....ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt..........tZ",
-        "Zt.....t.......................................tt......................................t..........tZ",
-        "Zt.....t.......................................tt......................................t..........tZ",
-        "Zts....t.......................................tt......................................t..........tZ",
-        "Zts....t.......................................tt......................................t..........tZ",
-        "Zts....t.......................................tt......................................t..........tZ",
-        "Zts....t.......................................tt......................................t..........tZ",
-        "Zts....t.......................................tt......................................t..........tZ",
-        "Zt.....t.......................................tt......................................t..........tZ",
-        "Zt.............................................tt.................................................tZ",
-        "Zt.............................................tt.................................................tZ",
-        "Zt.............................................tt.................................................tZ",
-        "Zt.............................................tt.................................................tZ",
-        "Zt.....ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt..........tZ",
-        "Zt.....t.......................................tt.................................................tZ",
-        "Zt.....t.......................................tt.................................................tZ",
-        "Zt.....t.......................................tt.................................................tZ",
-        "Zt.....t.......................................tt.................................................tZ",
-        "Zt.....t.......................................tt.................................................tZ",
-        "Zt.....t.......................................tt.................................................tZ",
-        "Zt.............................................tt.................................................tZ",
-        "Zt.............................................tt.................................................tZ",
-        "Zt.............................................tt.................................................tZ",
-        "Zt.....ttttttttt...tttttttttttttttttttttttttttttt.................................................tZ",
-        "Zt.....t...........t...........................tt.................................................tZ",
-        "Zt.....t...........t...........................tt.................................................tZ",
-        "Zt.....t...........t...........................tt.................................................tZ",
-        "Zt.....t...........t...........................tt.................................................tZ",
-        "Zt.....t...........t...........................tt.................................................tZ",
-        "Zt.....tts.ttttttttt...ttt.....................tt.................................................tZ",
-        "Zt.....tts.t.......t...t.......................tt.................................................tZ",
-        "Zt.....tts.t.......t...t.......................tt.................................................tZ",
-        "Zt.....tts.ttttttttt...t.......................tt.................................................tZ",
-        "Zt.....t...............t.......................tt.................................................tZ",
-        "Zt.....tGGGGGGGGGGGGGGGt..........v............tt.................................................tZ",
-        "Zt.....tttttttttttttttttgggggggggggggggggggggggtt.................................................tZ",
-        "Zt.....tttttttttttttttttttttttttttttttttttttttttt.................................................tZ",
-        "Zt.............................................tt.................................................tZ",
-        "Zt.............................................tt.................................................tZ",
-        "Zt.............................................tt.................................................tZ",
-        "Zt.............................................tt.................................................tZ",
-        "Zt.............................................tt.................................................tZ",
-        "Zt.............................................tt.................................................tZ",
-        "Zt.............................................tt.................................................tZ",
-        "Zt.............................................tt.................................................tZ",
-        "Zt.............................................tt.................................................tZ",
-        "Zt.............................................tt.................................................tZ",
-        "Zt.............................................tt.................................................tZ",
-        "Zt.............................................tt.................................................tZ",
-        "Zt.............................................tt.................................................tZ",
-        "Zt.............................................tt.................................................tZ",
-        "Zt.............................................tt.................................................tZ",
-        "Zt.............................................tt.................................................tZ",
-        "Zt.............................................tt.................................................tZ",
-        "Zt.............................................tt.................................................tZ",
-        "Zt.............................................tt.................................................tZ",
-        "Zt.............................................tt.................................................tZ",
-        "Zt.............................................tt.................................................tZ",
-        "Zt.............................................tt.................................................tZ",
-        "ZttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttZ",
-        "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ",
-        ], 0,0, 18, 18
-    );
+function maps(){
+    mapA = new Tiles([
+        "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbtttttttttttttbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbtHHHHHHHHHHHtbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbtHHHHHHHHHHHtbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbtHHHHHHHHHHHtbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbtHHHHyHHHHHHtbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbtHHHHHHHHHHHtbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbtHHHHHHHHHHHtbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbtHHHHHHHHHHHtbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbtHHHHHHHHHHHtbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbttttttttttttttttttttttttttttDttttttbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbtpppppppppptmmmmmmpppptHHHHHHHHHHHtbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbtpppppppppptSSSSSSpppptHHHHHHHHHHHtbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbtpppppppppptHHHHHHpppptHHHHHHHHHHHtbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbtpppppppppptpppppppppptHHHHHHHHHHHtbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbtppppprppppDppppppppppDHHHHHHHHHHHDbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbtpppprppppptpppppppppptHHHHHHHHHHHtbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbtpppppppppptpppppppppptHHHHHHHHHHHtbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbtpppppppppptpppppppppptHHHHHHHHHHHtbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbtpppppppppptppppSSSSSStHHHHHHHHHHHtbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbtpppppppppptppppmmmmmmtHHHHHHHHHHHtbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbttttttttttttttttttttttttttttnttttttbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbtHHHHHHHHHHHtbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbtHHHHHHHHHHHtbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbtHHHHHHHHHHHtbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbtHHHHHHHHHHHtbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbtHHHHHHHHHHHtbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbtHHHHHHHHHHHtbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbtHHHHHHHHHHHtbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbtHHHHHHHHHHHtbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbtHHHHHHHHHHHtbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbtHHHHBHHHHHHtbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbtHHHHHHHHHHHtbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbtHHHHHHHHHHHtbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbtHHHHHHHHHHHtbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbtHHHHHHHHHHHtbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbtHHHHHHHHHHHtbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbtHHHHHHHHHHHtbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbtHHHHHHHHHHHtbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbtHHHHHHHHHHHtbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbtttttttttttttbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    ])
 }
 
 function setup(){
-    createCanvas(windowWidth, windowHeight)
-
-    assigningvariables();
-
-    player = new Sprite(windowWidth/2, windowHeight/2, 15,15, "d");
-    player.color = "blue";
-    player.rotationLock = true;
-    
-    world.gravity.y = 9.80665;
+    createCanvas(windowWidth, windowHeight);
 
 
-    mapdesignenvironment();
-}
-
+} 
 
 function draw(){
     background(0);
-    camerasettings();
-    basicmovement();
 
-}
-
-function basicmovement(){
-    // CHECK FOR GROUND WHEN W
-    if((kb.presses("UP"))){
-        if((player.colliding(underground)) || (player.colliding(grass) || player.colliding())){
-            player.vel.y += 5;
-        }
-        else{
-            console.log("not grounded");
-        }
-    }
-
-    if(kb.pressing("RIGHT")){
-        player.x += base;
-    }
-
-    if(kb.pressing("LEFT")){
-        player.x -= base;
-    }
-}
-
-function camerasettings(){
-
-    camera.x = player.x;
-    camera.y = player.y;
-    camera.zoom = 4;
 
 }
