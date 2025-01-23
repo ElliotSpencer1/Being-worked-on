@@ -212,27 +212,29 @@ function Map_Setup() {
 }
 
 function Camera_Setup() {
-  if ((guy.x > 936 && guy.x < 1220) && (guy.y > 900 && guy.y < 1058)){
-    if (camera.x > 1062 && camera.x < 1094){
-      camera.x = 1080
-    }
-    if (camera.y > 980){
-      camera.y -=2.6
-    }
-    if(camera.zoom < 1.3){
-      camera.zoom +=0.01
-    }
-  }
-  else{
-    if (guy.y > 1080 && camera.y != guy.y){
-      camera.y +=2.6
-    }
-    if(camera.zoom > 1){
-      camera.zoom -=0.01
-    }
-    camera.x = guy.x
-    camera.y = guy.y 
-  }
+  camera.x = boss.x;
+  camera.y = boss.y;
+  // if ((guy.x > 936 && guy.x < 1220) && (guy.y > 900 && guy.y < 1058)){
+  //   if (camera.x > 1062 && camera.x < 1094){
+  //     camera.x = 1080
+  //   }
+  //   if (camera.y > 980){
+  //     camera.y -=2.6
+  //   }
+  //   if(camera.zoom < 1.3){
+  //     camera.zoom +=0.01
+  //   }
+  // }
+  // else{
+  //   if (guy.y > 1080 && camera.y != guy.y){
+  //     camera.y +=2.6
+  //   }
+  //   if(camera.zoom > 1){
+  //     camera.zoom -=0.01
+  //   }
+  //   camera.x = guy.x
+  //   camera.y = guy.y 
+  // }
 }
 
 function setup() {
@@ -499,7 +501,7 @@ function bossstuff(){
     boss.moveTo(guy.x, guy.y);
   } else {
     // Move boss in a circular pattern
-    moveBossInCircles();
+    // moveBossInCircles();
   }
 
   if(sword.collides(boss)){
@@ -511,22 +513,22 @@ function bossstuff(){
   }
 }
 
-function moveBossInCircles() {
-  if(boss){
-    circleStep++;
-    if (circleStep < 60) {
-      boss.moveTo(boss.x, boss.y++)
-    } else if (circleStep < 90) {
-      boss.moveTo(boss.x++, boss.y) // Move right
-    } else if (circleStep < 150) {
-      boss.moveTo(boss.x, boss.y--) // Move up
-    } else if (circleStep < 180) {
-      boss.moveTo(boss.x--, boss.y) // Move left
-    } else {
-      circleStep = 0; // Reset the step to loop the pattern
-    }
-  }
-}
+// function moveBossInCircles() {
+//   if(boss){
+//     circleStep++;
+//     if (circleStep < 60) {
+//       boss.moveTo(boss.x, boss.y++)
+//     } else if (circleStep < 90) {
+//       boss.moveTo(boss.x++, boss.y) // Move right
+//     } else if (circleStep < 150) {
+//       boss.moveTo(boss.x, boss.y--) // Move up
+//     } else if (circleStep < 180) {
+//       boss.moveTo(boss.x--, boss.y) // Move left
+//     } else {
+//       circleStep = 0; // Reset the step to loop the pattern
+//     }
+//   }
+// }
 
 function enemypathfinding(){
   if(!firstpass){
