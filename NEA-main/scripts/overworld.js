@@ -18,6 +18,10 @@ let enemyspawnbrick, firstpass, boss;
 let thresholdDistance = 50;
 let circleStep = 0;
 
+let bossdefeat;
+
+bossdefeat = false;
+
 function preload() {
 
   grassImg = loadImage('images/zeldaGrass.png')
@@ -200,41 +204,50 @@ function Map_Setup() {
   stairs.color = '#686767'
 
   // boss
+  bossspawntile = new Group();
+  bossspawntile.collider = "s";
+  bossspawntile.tile = "P";
+  bossspawntile.color = "red";
+  bossspawntile.w = tileSize
+  bossspawntile.h = tileSize
+
   boss = new Group();
-  boss.collider = "s";
-  boss.tile = "P";
+  boss.collider = "d";
   boss.color = "red";
+  boss.rotationLock = true;
   boss.w = tileSize * 1.5
   boss.h = tileSize * 1.5
   boss.health = 100;
   boss.cooldown = false;
 
+  
+
 }
 
 function Camera_Setup() {
-  camera.x = boss.x;
-  camera.y = boss.y;
-  // if ((guy.x > 936 && guy.x < 1220) && (guy.y > 900 && guy.y < 1058)){
-  //   if (camera.x > 1062 && camera.x < 1094){
-  //     camera.x = 1080
-  //   }
-  //   if (camera.y > 980){
-  //     camera.y -=2.6
-  //   }
-  //   if(camera.zoom < 1.3){
-  //     camera.zoom +=0.01
-  //   }
-  // }
-  // else{
-  //   if (guy.y > 1080 && camera.y != guy.y){
-  //     camera.y +=2.6
-  //   }
-  //   if(camera.zoom > 1){
-  //     camera.zoom -=0.01
-  //   }
-  //   camera.x = guy.x
-  //   camera.y = guy.y 
-  // }
+  // camera.x = boss.x;
+  // camera.y = boss.y;
+  if ((guy.x > 936 && guy.x < 1220) && (guy.y > 900 && guy.y < 1058)){
+    if (camera.x > 1062 && camera.x < 1094){
+      camera.x = 1080
+    }
+    if (camera.y > 980){
+      camera.y -=2.6
+    }
+    if(camera.zoom < 1.3){
+      camera.zoom +=0.01
+    }
+  }
+  else{
+    if (guy.y > 1080 && camera.y != guy.y){
+      camera.y +=2.6
+    }
+    if(camera.zoom > 1){
+      camera.zoom -=0.01
+    }
+    camera.x = guy.x
+    camera.y = guy.y 
+  }
 }
 
 function setup() {
@@ -284,7 +297,7 @@ function setup() {
     "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
     "ggggggggggggggggggggz...zggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
     "zzzzzzzzzzzzzzzzzzzzz...zzzzzzzzzzzzzzzzzzzzzzzzzzzgggggggggggggggggggggggggggggggggggggggggggFggggg",
-    "bbbbbbbbbbbbbbbbbbbbb.P.bbbbbbbbbbbbbbbbbbbbbbbbbbzggggggggggggggggggggggggggggggggggggggggggggggggg",
+    "bbbbbbbbbbbbbbbbbbbbb...bbbbbbbbbbbbbbbbbbbbbbbbbbzggggggggggggggggggggggggggggggggggggggggggggggggg",
     "bbbbbbbbbbbbbbbbbbbbb...bbbbbbbbbbbbbbbbbbbbbbbbbbzzzzzzzzzzzzzzzzzzzzzzzggggggggggggggggggggggggggg",
     "bbbbbbbbbbbbbbbbbbbbz...zbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbzggggggggggggggggggggggggggg",
     "zzzzzzzzzzzzzzzzzzzzzgggzzzzzzzzzzzzzzzzzzzzzzzbbbbbbbbbbbbbbbbbbbbbbbbbzggggggggggggggggggggggggggg",
@@ -296,7 +309,7 @@ function setup() {
     "gggggggggggggggggggFgggggggggggWWWWWWWSSSgggggzbbbzgggggggggggggggggzbbbzggggggggggggggggggggggggggg",
     "gggggggggggggggggggggggggggggggWWWWWWWWWWWSgggzbbbzggggggggLRgggggggzbbbzggggggggggggggggggggggggggg",
     "gggggggggggggggggggggggggggggggSWWWWWWWWWWSSggzbbbzgggggggglrgggggggzbbbzggggggggggggggggggggggggggg",
-    "ggggggggggggggggggggggggggggggSWWWWWWWWWWWWSggzbbbzgggggggggggggggggzbbbzggggggggggggggggggggggggggg",
+    "ggggggggggggggggggggggggggggggSWWWWWWWWWWWWSggzbbbzggggggggPggggggggzbbbzggggggggggggggggggggggggggg",
     "gggggggggggggggggggggggggggggggWWWWWWWWWWWWSggzbbbzgggggggggggggggggzbbbzggggggggggggggggggggggggggg",
     "ggggggggggggggggggggggggggggggggWWWWWWWWWWWSggzbbbzgggggggggggggggggzbbbzggggggggggggggggggggggggggg",
     "ggggggggggFgggggggggggggggggggggWWWWWWWWWWSSggzbbbzgggggggggggggggggzbbbzggggggggggggggggggggggggggg",
@@ -465,7 +478,7 @@ function setup() {
   // fresh code
 
 
-  // enemies can be spawned by adding an "x" into the tilemap
+  // enemies can be spawned by adding an "F" into the tilemap
 
   new enemies.Sprite(359, 358, 20, 20);
 
@@ -486,30 +499,72 @@ function draw() {
   Camera_Setup()
   swordDraw()
   Movement()
-  if (guy.overlaps(trapDoorBL) || guy.overlaps(trapDoorBR) || guy.overlaps(trapDoorTL) || guy.overlaps(trapDoorTR)){
-    enterDungeon()
+  if(bossdefeat){
+    trapDoorBR.visible = true;
+    trapDoorBR.collider = "s";
+    
+    trapDoorBL.visible = true;
+    trapDoorBL.collider = "s";
+
+    trapDoorTL.visible = true;
+    trapDoorTL.collider = "s";
+
+    trapDoorTR.visible = true;
+    trapDoorTR.collider = "s";
+    if (guy.overlaps(trapDoorBL) || guy.overlaps(trapDoorBR) || guy.overlaps(trapDoorTL) || guy.overlaps(trapDoorTR)){
+      enterDungeon()
+    }
+  }
+  else{
+    trapDoorBR.visible = false;
+    trapDoorBR.collider = "n";
+
+    trapDoorBL.visible = false;
+    trapDoorBL.collider = "n";
+
+    trapDoorTL.visible = false;
+    trapDoorTL.collider = "n";
+
+    trapDoorTR.visible = false;
+    trapDoorTR.collider = "n";
   }
   enemypathfinding();
   bossstuff();
 }
 
-function bossstuff(){
-  let distance = dist(boss.x, boss.y, guy.x, guy.y);
+let firstpass2 = false;
 
-  if (distance < thresholdDistance) {
-    // Move boss towards player
-    boss.moveTo(guy.x, guy.y);
-  } else {
-    // Move boss in a circular pattern
-    // moveBossInCircles();
+function bossstuff(){
+
+  if(!firstpass2){
+    let countx = 0;
+    for(t of bossspawntile){
+      if(countx < bossspawntile.length){
+        new boss.Sprite(t.x, t.y);
+        countx++
+      }
+      if(countx > bossspawntile.length - 1){
+        firstpass2 = true;
+      }
+    }
   }
 
-  if(sword.collides(boss)){
-    boss.health -= 25;
-    boss.cooldown = true;
-    setTimeout(() => {
-      boss.cooldown = false;
-    }, 25);
+  if(firstpass2){
+    let distance = dist(boss.x, boss.y, guy.x, guy.y);
+
+    boss.moveTo(guy.x, guy.y, 1);
+    if(sword.collides(boss)){
+      boss.health -= 25;
+      boss.cooldown = true;
+      setTimeout(() => {
+        boss.cooldown = false;
+      }, 25);
+    }
+  }
+  if(boss.health <= 0){
+    bossdefeat = true;
+    boss.visible = false;
+    boss.collider = "n";
   }
 }
 
@@ -877,14 +932,26 @@ function enterDungeon() {
 
 function openTrapDoor(){
   trapDoorTL.image = trapDoorOpenTLImg
-  trapDoorTR.image = trapDoorOpenTRImg
-  trapDoorBL.image = trapDoorOpenBLImg
-  trapDoorBR.image = trapDoorOpenBRImg
+  setTimeout(() => {
+    trapDoorTR.image = trapDoorOpenTRImg
+    setTimeout(() => {
+      trapDoorBL.image = trapDoorOpenBLImg
+      setTimeout(() => {
+        trapDoorBR.image = trapDoorOpenBRImg
+      }, 250)
+    }, 250)
+  }, 250)
 }
 
 function closeTrapDoor(){
   trapDoorTL.img = trapDoorClosedTLImg
-  trapDoorTR.img = trapDoorClosedTRImg
-  trapDoorBL.img = trapDoorClosedBLImg
-  trapDoorBR.img = trapDoorClosedBRImg
+  setTimeout(() => {
+    trapDoorTR.img = trapDoorClosedTRImg
+    setTimeout(() => {
+      trapDoorBL.img = trapDoorClosedBLImg
+      setTimeout(() => {
+        trapDoorBR.img = trapDoorClosedBRImg
+      }, 250)
+    }, 250)
+  }, 250)
 }

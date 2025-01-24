@@ -7,26 +7,43 @@ let whichLevel = 0
 let countR = 0, countL = 0, countU = 0, countD = 0
 let floorImg, wallImg, stairsImg
 let walls, Wall, floors, brickFloor, stairs, Doors, rightDoor, leftDoor, upDoor, downDoor, tileMap, leftLimiter, rightLimiter, upLimiter, downLimiter
+let r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12;
+r1 = true;
+r2 = false;
+r3 = false;
+r4 = false;
+r5 = false;
+r6 = false;
+r7 = false;
+r8 = false;
+r9 = false;
+r10 = false;
+r11 = false;
+r12 = false;
+
 const levels = [
   [
     "============================================================",
     "=________==________==________==________==________==________=",
     "=________==________==________==________==________==________=",
-    "=________><________><________><________><________><________=",
-    "=________><________><________><________><________><________=",
+    "=________rl________rl________rl________rl________rl________=",
+    "=________rl________rl________rl________rl________rl________=", // follows right
     "=_S______==________==________==________==________==________=",
     "=________==________==________==________==________==________=",
-    "====vv========vv========vv========vv========vv========vv====",
-    "====^^========^^========^^========^^========^^========^^====",
+    "====dd========dd========dd========dd========dd========dd====", // goes down
+    "====uu========uu========uu========uu========uu========uu====",
     "=________==________==________==________==________==________=",
     "=________==________==________==________==________==________=",
-    "=________><________><________><________><________><________=",
-    "=________><________><________><________><________><________=",
+    "=________rl________rl________rl________rl________rl________=", // follows left
+    "=________rl________rl________rl________rl________rl________=",
     "=________==________==________==________==________==________=",
     "=________==________==________==________==________==________=",
     "============================================================",
   ]
 ]
+
+let healthbox, playerhealth;
+playerhealth = 100;
 
 function preload() {
 
@@ -98,6 +115,52 @@ function Map_Setup() {
   upDoor.tile = '^'
   upDoor.img = floorImg
 
+  enemyspawnbrick = new Group();
+  enemyspawnbrick.collider = "none";
+  enemyspawnbrick.image = floorImg; 
+  enemyspawnbrick.w = tileSize;
+  enemyspawnbrick.h = tileSize;
+  enemyspawnbrick.tile = "F";
+
+  blockedD = new Group();
+  blockedD.collider = "s";
+  blockedD.image = wallImg; 
+  blockedD.w = tileSize;
+  blockedD.h = tileSize;
+  blockedD.tile = "d";
+
+  blockedU = new Group();
+  blockedU.collider = "s";
+  blockedU.image = wallImg; 
+  blockedU.w = tileSize;
+  blockedU.h = tileSize;
+  blockedU.tile = "u";
+
+  blockedR = new Group();
+  blockedR.collider = "r";
+  blockedR.image = wallImg; 
+  blockedR.w = tileSize;
+  blockedR.h = tileSize;
+  blockedR.tile = "-";
+
+  blockedL = new Group();
+  blockedL.collider = "l";
+  blockedL.image = wallImg; 
+  blockedL.w = tileSize;
+  blockedL.h = tileSize;
+  blockedL.tile = "-";
+
+  enemies = new Group();
+  enemies.width = 20;
+  enemies.height = 20;
+  enemies.color = "green";
+  enemies.tile = "x";
+  enemies.collider = "d";
+  enemies.startX = 0;
+  enemies.moveCount = 0;
+  enemies.health = 100;
+  enemies.cooldown = false;
+
 }
 
 function dungeonCameraSetup() {
@@ -115,6 +178,10 @@ function setup() {
   tileMap = new Tiles(levels[whichLevel],0, 0, tileSize, tileSize)
   guySetup()
   stairLimits()
+
+  healthbox = new Sprite(windowWidth - (windowWidth/20)/2, 0 - (windowHeight/20)/2, windowWidth/20, windowHeight/20);
+  healthbox.text = playerhealth;
+  healthbox.textSize = 16;
 
   let sensors = new Group();
   topSensor = new sensors.Sprite(guy.x, guy.y - 8)
