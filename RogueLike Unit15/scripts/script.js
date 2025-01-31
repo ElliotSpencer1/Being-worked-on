@@ -10,9 +10,15 @@ function setup() {
   rows = floor(height / cellSize);
   
   walls = new Group();
+  walls.collider = "S";
+  walls.color = "gray";
   doorways = new Group();
+  doorways.collider = "S";
+  doorways.color = "brown";
   items = new Group();
+  items.collider = "S"
   bossSpawns = new Group();
+  bossSpawns.collider = "S";
   
   // Generate rooms
   for (let i = 0; i < numRooms - 1; i++) {
