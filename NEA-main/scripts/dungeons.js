@@ -116,7 +116,7 @@ class Boss {
   attack() {
     // Damage the player
     guy.health -= 50;
-    console.log("Boss attacked! Player health:", guy.health);
+    console.log("Boss attacked! Player health: ", guy.health);
   }
 
   isDefeated() {
