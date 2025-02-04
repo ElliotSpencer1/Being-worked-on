@@ -1,0 +1,15 @@
+{
+  "name": "being-worked-on",
+  "version": "1.0.0",
+  "description": "This is a repository where projects which are unfinished or are being made are being worked on currently.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "socket.io": "^4.8.1"
+  }
+}
