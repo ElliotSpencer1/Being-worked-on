@@ -1,0 +1,18 @@
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: blue;
+}
+#openCamera {
+    padding: 10px 20px;
+    font-size: 20px;
+    cursor: pointer;
+}
+#cameraFeed {
+    display: none;
+    width: 100vw;
+    height: 100vh;
+}
